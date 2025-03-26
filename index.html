@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./index.css">
+    <title>noc7 consultoria</title>
+</head>
+<body>
+    <nav>
+        <div class="logo">botZAP</div>
+        <div class="menu-btn">
+            <i class="fa fa-bars fa-2x"></i>
+        </div>
+
+        <ul>
+            <li><a href="#" class="active">Home</a></li>
+            <li><a href="#">Serviços</a></li>
+            <li><a href="#">Sobre</a></li>
+        </ul>
+    </nav>
+
+    <section class="painel_zap">
+        <div>
+            <img src="" alt="QR Code" id="qrcode">
+            <h3>Logs de Conexão:</h3>
+            <p class="logs"></p>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function() {
+        var socket = io();
+  
+        socket.on('message', function(msg) {
+          $('.logs').append($('<li>').text(msg));
+        });
+  
+        socket.on('qr', function(src) {
+          $('#qrcode').attr('src', src);
+          $('#qrcode').show();
+        });
+  
+        socket.on('ready', function(data) {
+          $('#qrcode').hide();
+        });
+  
+        socket.on('authenticated', function(data) {
+          $('#qrcode').hide();
+        });
+      });
+    </script>
+</body>
+</html>
